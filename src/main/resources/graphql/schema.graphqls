@@ -1,0 +1,74 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    allVehicles: [VehicleResponse]
+    vehicleById(id: ID!): VehicleResponse
+    vehicleByVin(vin: String!): VehicleResponse
+    vehiclesByBrand(brand: String!): [VehicleResponse]
+    vehiclesByModel(model: String!): [VehicleResponse]
+}
+
+type Mutation {
+    createVehicle(request: VehicleRequest!): VehicleResponse
+    updateVehicle(id: ID!, request: VehicleRequest!): VehicleResponse
+
+    addVersionToVehicle(vehicleId: ID!, request: VehicleVersionRequest!): VehicleVersionResponse
+
+    addPhotoToVehicle(vehicleId: ID!, request: VehiclePhotoRequest!): VehiclePhotoResponse
+
+    addColorToVehicle(vehicleId: ID!, request: AvailableColorRequest!): AvailableColorResponse
+}
+
+
+type VehicleResponse {
+    id: ID!
+    brand: String
+    model: String
+    year: Int
+    vin: String
+    engineType: String
+    versions: [VehicleVersionResponse]
+    photos: [VehiclePhotoResponse]
+    availableColors: [AvailableColorResponse]
+}
+
+type VehicleVersionResponse {
+    id: ID!
+    versionName: String
+}
+
+type VehiclePhotoResponse {
+    id: ID!
+    imageUrl: String
+    description: String
+}
+
+type AvailableColorResponse {
+    id: ID!
+    colorName: String
+}
+
+
+input VehicleRequest {
+    brand: String!
+    model: String!
+    year: Int!
+    vin: String!
+    engineType: String
+}
+
+input VehicleVersionRequest {
+    versionName: String!
+}
+
+input VehiclePhotoRequest {
+    imageUrl: String!
+    description: String
+}
+
+input AvailableColorRequest {
+    colorName: String!
+}
